@@ -33,7 +33,7 @@ var tcs = []struct {
 	},
 }
 
-func Test_addTwoNums(t *testing.T) {
+func Test_convert(t *testing.T) {
 	ast := assert.New(t)
 
 	for _, tc := range tcs {
@@ -44,7 +44,7 @@ func Test_addTwoNums(t *testing.T) {
 }
 
 
-func Test_addTwoNums2(t *testing.T) {
+func Test_convert2(t *testing.T) {
 	ast := assert.New(t)
 
 	for _, tc := range tcs {

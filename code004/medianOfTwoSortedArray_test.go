@@ -28,7 +28,7 @@ var tcs = []struct {
 	},
 }
 
-func Test_addTwoNums(t *testing.T) {
+func Test_medianOfTwoSortedArray(t *testing.T) {
 	ast := assert.New(t)
 
 	for _, tc := range tcs {
