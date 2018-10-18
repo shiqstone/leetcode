@@ -25,6 +25,14 @@ var tcs = []struct {
 		12321,
 		true,
 	},
+	{
+		12345654321,
+		true,
+	},
+	{
+		1234567899,
+		false,
+	},
 }
 
 func Test_palindromeNum(t *testing.T) {

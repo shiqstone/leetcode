@@ -4,11 +4,14 @@ func palindromeNum(para int) bool {
 	if para < 0 {
 		return false
 	}
-	temp := para
 	res := 0
-	for temp > 0 {
-		res = res * 10 + temp%10
-		temp = temp/10
+	/*
+		avoid integer overflow after reverse
+		divide input to two part, compare first half with second halt reverse
+	 */
+	for para > res {
+		res = res * 10 + para%10
+		para = para/10
 	}
-	return res==para
+	return res==para || res/10==para
 }
