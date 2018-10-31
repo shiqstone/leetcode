@@ -24,7 +24,7 @@ var tcs = []struct {
 	},
 }
 
-func Test_reverseInt(t *testing.T) {
+func Test_maxArea(t *testing.T) {
 	ast := assert.New(t)
 
 	for _, tc := range tcs {
