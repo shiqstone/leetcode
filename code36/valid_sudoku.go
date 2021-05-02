@@ -1,13 +1,13 @@
 package main
 
-func isValidSudoku(board [][]string) bool {
-	row := make(map[string][]int)
-	col := make(map[string][]int)
-	sub := make(map[string][]int)
+func isValidSudoku(board [][]byte) bool {
+	row := make(map[byte][]int)
+	col := make(map[byte][]int)
+	sub := make(map[byte][]int)
 	for i := 0; i < 9; i++ {
 		for j := 0; j < 9; j++ {
 			char := board[i][j]
-			if char == "." {
+			if char == '.' {
 				continue
 			}
 			if rows, ok := row[char]; ok {
