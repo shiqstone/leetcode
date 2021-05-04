@@ -44,7 +44,7 @@ func Test_solve(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := solve(tt.args.board); !reflect.DeepEqual(got, tt.want) {
+			if got := solveSudoku(tt.args.board); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("solve() = %v, want %v", got, tt.want)
 			}
 		})
