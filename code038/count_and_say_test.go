@@ -1,4 +1,4 @@
-package code38
+package code038
 
 import "testing"
 

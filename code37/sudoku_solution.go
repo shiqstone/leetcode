@@ -1,4 +1,4 @@
-package code37
+package code037
 
 func solveSudoku(board [][]byte) [][]byte {
 	return solve(board, 0, 0)
