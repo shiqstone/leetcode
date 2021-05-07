@@ -2,7 +2,6 @@ package code043
 
 import (
 	"strconv"
-	"strings"
 )
 
 func multiply(num1 string, num2 string) string {
@@ -15,24 +14,29 @@ func multiply(num1 string, num2 string) string {
 
 	res := "0"
 	for i := len1 - 1; i >= 0; i-- {
-		dn1, _ := strconv.Atoi(num1[i : i+1])
+		dn1 := int(num1[i] - '0')
 		dres := "0"
 		ppi := len1 - i - 1
 		for j := len2 - 1; j >= 0; j-- {
-			dn2, _ := strconv.Atoi(num2[j : j+1])
+			dn2 := int(num2[j] - '0')
 			tmp := dn1 * dn2
 			tmpstr := strconv.Itoa(tmp)
 			ppj := len2 - j - 1
 			if ppj > 0 {
-				tmpstr += strings.Repeat("0", ppj)
+				for k := 0; k < ppj; k++ {
+					tmpstr += "0"
+				}
+				// tmpstr += strings.Repeat("0", ppj)
 			}
 
-			dres = add(dres, tmpstr)
+			dres = sumStr(dres, tmpstr)
 		}
 		if ppi > 0 {
-			dres += strings.Repeat("0", ppi)
+			for k := 0; k < ppi; k++ {
+				dres += "0"
+			}
 		}
-		res = add(res, dres)
+		res = sumStr(res, dres)
 	}
 	return res
 }
@@ -81,4 +85,33 @@ func add(a, b string) string {
 		}
 		return b
 	}
+}
+
+func sumStr(a, b string) string {
+	carry := 0
+	ai := len(a) - 1
+	bi := len(b) - 1
+	res := []byte{}
+	for ai >= 0 || bi >= 0 {
+		an := 0
+		bn := 0
+		if ai >= 0 {
+			an = int(a[ai] - '0')
+		}
+		if bi >= 0 {
+			bn = int(b[bi] - '0')
+		}
+		sum := an + bn + carry
+		carry = sum / 10
+		ans := sum % 10
+		// res = strconv.Itoa(ans) + res
+		res = append([]byte{byte('0' + ans)}, res...)
+		ai--
+		bi--
+	}
+	if carry > 0 {
+		// res = "1" + res
+		res = append([]byte{'1'}, res...)
+	}
+	return string(res)
 }
