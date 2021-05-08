@@ -1,6 +1,7 @@
 package code043
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -127,6 +128,46 @@ func Test_add(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := sumStr(tt.args.a, tt.args.b); got != tt.want {
 				t.Errorf("add() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_split(t *testing.T) {
+	type args struct {
+		in string
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			name: "1",
+			args: args{
+				in: "1",
+			},
+			want: []string{"1"},
+		},
+		{
+			name: "1234",
+			args: args{
+				in: "1234",
+			},
+			want: []string{"1234"},
+		},
+		{
+			name: "12345",
+			args: args{
+				in: "12345",
+			},
+			want: []string{"1", "2345"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := split(tt.args.in); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("split() = %v, want %v", got, tt.want)
 			}
 		})
 	}

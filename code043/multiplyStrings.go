@@ -1,10 +1,49 @@
 package code043
 
 import (
+	"fmt"
 	"strconv"
+	"strings"
 )
 
 func multiply(num1 string, num2 string) string {
+	n1, n2 := len(num1)-1, len(num2)-1
+	cap := n1 + n2 + 2
+	mul := make([]int, cap, cap)
+	//开始相乘,注意要处理进位
+	for i := n1; i >= 0; i-- {
+		for j := n2; j >= 0; j-- {
+			bitmul := int(num1[i]-'0') * int(num2[j]-'0')
+			bitmul += mul[i+j+1] // 先加低位判断是否有新的进位
+
+			mul[i+j] += bitmul / 10
+			mul[i+j+1] = bitmul % 10
+		}
+	}
+
+	i := 0
+	// 去掉前导0
+	for i < len(mul)-1 && mul[i] == 0 {
+		i++
+	}
+	res := mul[i:len(mul)]
+	var sb strings.Builder
+	for _, val := range res {
+		fmt.Fprintf(&sb, "%d", val)
+	}
+	return sb.String()
+}
+
+func multiply2(num1 string, num2 string) string {
+	if num1 == "0" || num2 == "0" {
+		return "0"
+	}
+	n1s := split(num1)
+	n2s := split(num2)
+	return multi(n1s, n2s)
+}
+
+func multiply1(num1 string, num2 string) string {
 	if num1 == "0" || num2 == "0" {
 		return "0"
 	}
@@ -114,4 +153,54 @@ func sumStr(a, b string) string {
 		res = append([]byte{'1'}, res...)
 	}
 	return string(res)
+}
+
+func multi(a, b []string) string {
+	alen := len(a)
+	blen := len(b)
+	if alen > blen {
+		a, b = b, a
+		alen, blen = blen, alen
+	}
+	res := "0"
+	for i := alen - 1; i >= 0; i-- {
+		an, _ := strconv.Atoi(a[i])
+		if an == 0 {
+			continue
+		}
+		af := alen - i - 1
+		for j := blen - 1; j >= 0; j-- {
+			bn, _ := strconv.Atoi(b[j])
+			if bn == 0 {
+				continue
+			}
+			bf := blen - j - 1
+			tmp := strconv.Itoa(an * bn)
+			for k := 0; k < (af + bf); k++ {
+				tmp += "0000"
+			}
+			res = add(res, tmp)
+		}
+	}
+	return res
+}
+
+func split(in string) []string {
+	len := len(in)
+	fl := len % 4
+	secs := (len-1)/4 + 1
+	res := make([]string, secs)
+	for i := 0; i < secs; i++ {
+		pos := 0
+		if i == 0 && fl > 0 {
+			pos = fl
+		} else {
+			pos = 4
+		}
+		res[i] = in[:pos]
+		if pos+1 < len {
+			in = in[pos:]
+		}
+	}
+	return res
 }
