@@ -25,6 +25,26 @@ func Test_groupAnagrams(t *testing.T) {
 				[]string{"bat"},
 			},
 		},
+		{
+			name: "test1",
+			args: args{
+				strs: []string{"ac", "c"},
+			},
+			want: [][]string{
+				[]string{"ac"},
+				[]string{"c"},
+			},
+		},
+		{
+			name: "test1",
+			args: args{
+				strs: []string{"ac", "d"},
+			},
+			want: [][]string{
+				[]string{"ac"},
+				[]string{"d"},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
