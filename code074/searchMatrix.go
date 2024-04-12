@@ -5,20 +5,32 @@ func searchMatrix(matrix [][]int, target int) bool {
 	n := len(matrix[0])
 
 	left := 0
-	right := m*n - 1
+	right := n - 1
+	row := 0
+	col := right
 
-	for left <= right {
-		mid := (left + right) / 2
-		row := mid / n
-		col := mid % n
-		element := matrix[row][col]
-
-		if element == target {
-			return true
-		} else if element < target {
-			left = mid + 1
+	for row < m {
+		if matrix[row][col] < target {
+			row += 1
+			left = row * n
+			right = left + n - 1
+			continue
 		} else {
-			right = mid - 1
+			for left <= right {
+				mid := (left + right) / 2
+				col = mid - row*n
+				element := matrix[row][col]
+
+				if element == target {
+					return true
+				} else if element < target {
+					left = mid + 1
+				} else {
+					right = mid - 1
+				}
+				continue
+			}
+			break
 		}
 	}
 
