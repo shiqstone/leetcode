@@ -73,3 +73,58 @@ func max(a, b int) int {
 	}
 	return b
 }
+
+func maximalRectangle2(matrix [][]byte) int {
+	if len(matrix) == 0 {
+		return 0
+	}
+
+	ans := 0
+	m, n := len(matrix), len(matrix[0])
+	heights := make([]int, n)
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if matrix[i][j] == '1' {
+				heights[j] += 1
+			} else {
+				heights[j] = 0
+			}
+		}
+		ans = max(ans, largestRectangleArea2(heights))
+	}
+	return ans
+}
+
+func largestRectangleArea2(heights []int) int {
+	if len(heights) <= 0 {
+		return 0
+	}
+
+	ans := 0
+	heights = append([]int{0}, heights...)
+	heights = append(heights, 0)
+
+	stack := []int{0}
+	for i := 1; i < len(heights); i++ {
+		if heights[i] > heights[stack[len(stack)-1]] {
+			stack = append(stack, i)
+		} else if heights[i] == heights[stack[len(stack)-1]] {
+			stack = stack[:len(stack)-1]
+			stack = append(stack, i)
+		} else {
+			for len(stack) > 0 && heights[i] < heights[stack[len(stack)-1]] {
+				mid := stack[len(stack)-1]
+				stack = stack[:len(stack)-1]
+				if len(stack) > 0 {
+					l := stack[len(stack)-1]
+					r := i
+					h := heights[mid]
+					ans = max(ans, (r-l-1)*h)
+				}
+			}
+			stack = append(stack, i)
+		}
+	}
+
+	return ans
+}
